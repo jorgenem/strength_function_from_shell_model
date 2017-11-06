@@ -86,7 +86,7 @@ i_Exmax = int(np.floor(Ex_max/bin_width))
 
 
 # Set name to be used for saving figures
-save_name = "Ni70_shell_model_strength_functions"
+save_name = "Ni70_shell_model_strength_functions-better_avging"
 
 # Define list of calculation input files and corresponding label names
 inputfile = "summary_Ni70_ca48mh1g.txt"
@@ -177,6 +177,7 @@ for i_Jpi in range(len(Jpi_list)):
     gsf_ExJpi[i_Ex,:,i_Jpi] = a * div0(B_pixel_sum[i_Ex,:,i_Jpi], B_pixel_count[i_Ex,:,i_Jpi]) * rho_ExJpi[i_Ex, i_Jpi]
 
 gsf_tmp = gsf_ExJpi[i_Exmin:i_Exmax+1,:,:]
+# Average gsf over Ex and Jpi, making sure only to divide by number of non-zero bins:
 gsf_ExJpiavg = div0(gsf_tmp.sum(axis=(0,2)), (gsf_tmp!=0).sum(axis=(0,2)))
 
 linestyle = linestyles[0]
@@ -195,6 +196,7 @@ for i_Ex in range(Nbins):
                   # a *           <B(M1; Eg, Ex)>                                 * rho(Ex)  
   gsf_Ex[i_Ex,:] = a * div0(B_pixel_sum_EgEx[i_Ex,:], B_pixel_count_EgEx[i_Ex,:]) * rho_total[i_Ex]
 
+# Average gsf over Ex, making sure only to divide by number of non-zero bins:
 gsf_Exavg =  div0(gsf_Ex[i_Exmin:i_Exmax+1,:].sum(axis=0), (gsf_Ex[i_Exmin:i_Exmax+1,:]!=0).sum(axis=0))
 
 linestyle = linestyles[1]
@@ -237,6 +239,7 @@ for i_Ex in range(Nbins):
   gsf_neg_Ex[i_Ex,:] = a * div0(B_pixel_sum_neg_EgEx[i_Ex,:], B_pixel_count_neg_EgEx[i_Ex,:]) * rho_neg[i_Ex]
 
 
+# Average gsf over Ex, making sure only to divide by number of non-zero bins:
 gsf_pos_Exavg =  div0(gsf_pos_Ex[i_Exmin:i_Exmax+1,:].sum(axis=0), (gsf_pos_Ex[i_Exmin:i_Exmax+1,:]!=0).sum(axis=0))
 gsf_neg_Exavg =  div0(gsf_neg_Ex[i_Exmin:i_Exmax+1,:].sum(axis=0), (gsf_neg_Ex[i_Exmin:i_Exmax+1,:]!=0).sum(axis=0))
 
